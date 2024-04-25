@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.template.loader import render_to_string
 from django.template.defaultfilters import slugify
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 
 from .forms import AddPostForm, UploadFileForm
 from .models import Women, Category, TagPost, UploadFiles
@@ -79,7 +79,7 @@ def about(request):
                   {'title': 'О сайте', 'menu': menu, 'form': form})
 
 
-def show_post(request, post_slug):
+'''def show_post(request, post_slug):
     post = get_object_or_404(Women, slug=post_slug)
 
     data = {
@@ -89,8 +89,23 @@ def show_post(request, post_slug):
         'cat_selected': 1,
     }
 
-    return render(request, 'women/post.html', data)
+    return render(request, 'women/post.html', data)'''
 
+
+class ShowPost(DetailView):
+    # model = Women
+    template_name = 'women/post.html'
+    slug_url_kwarg = 'post_slug'
+    context_object_name = 'post'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = context['post'].title
+        context['menu'] = menu
+        return context
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Women.published, slug=self.kwargs[self.slug_url_kwarg])
 
 
 '''def addpage(request):
@@ -186,7 +201,7 @@ def page_not_found(request, exception):
     return render(request, 'women/index.html')'''
 
 
-class WomenTag(ListView):
+class TagPostList(ListView):
     template_name = 'women/index.html'
     context_object_name = 'posts'
     allow_empty = False
@@ -196,8 +211,8 @@ class WomenTag(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        tag = context['posts'][0].tags.all()[0]
-        context['title'] = f'Тег - {tag.tag}'
+        tag = TagPost.objects.get(slug=self.kwargs['tag_slug'])
+        context['title'] = 'Тег' + tag.tag
         context['menu'] = menu
         context['cat_selected'] = None
         return context
