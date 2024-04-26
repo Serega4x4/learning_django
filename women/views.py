@@ -139,7 +139,6 @@ class AddPage(FormView):
         form.save()
         return super().form_valid(form)
 
-
 # class AddPage(View):
 #     def get(self, request):
 #         form = AddPostForm()
