@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView
 
-from users.forms import LoginUserForm, RegisterUserForm, ProfileUserForm, UserPasswordChangeForm
+from .forms import LoginUserForm, RegisterUserForm, ProfileUserForm, UserPasswordChangeForm
 
 
 class LoginUser(LoginView):
@@ -22,12 +22,12 @@ class LoginUser(LoginView):
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = 'users/register.html'
-    extra_context = {'title': 'Регистрация'}
+    extra_context = {'title': "Регистрация"}
     success_url = reverse_lazy('users:login')
 
 
 class ProfileUser(LoginRequiredMixin, UpdateView):
-    # model = get_user_model()
+    model = get_user_model()
     form_class = ProfileUserForm
     template_name = 'users/profile.html'
     extra_context = {'title': "Профиль пользователя"}
@@ -41,5 +41,5 @@ class ProfileUser(LoginRequiredMixin, UpdateView):
 
 class UserPasswordChange(PasswordChangeView):
     form_class = UserPasswordChangeForm
-    success_url = reverse_lazy('users:password_change_done')
-    template_name = 'users/password_change_form.html'
+    success_url = reverse_lazy("users:password_change_done")
+    template_name = "users/password_change_form.html"
