@@ -152,21 +152,19 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_HOST = "smtp.yandex.ru"
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "Yulia-Krasota-Vysokij@myandex.ru"
-EMAIL_HOST_PASSWORD = "hzvftqxjkxhvnfod"
+########################
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SERVER_EMAIL = EMAIL_HOST_USER
-EMAIL_ADMIN = EMAIL_HOST_USER
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# SERVER_EMAIL = EMAIL_HOST_USER
+# EMAIL_ADMIN = EMAIL_HOST_USER
 
 AUTH_USER_MODEL = 'users.User'
 
 DEFAULT_USER_IMAGE = MEDIA_URL + 'users/default.png'
 
 
-SOCIAL_AUTH_GITHUB_KEY = 'Ov23li6WCwEbvRuspkDH'
-SOCIAL_AUTH_GITHUB_SECRET = '33c052b0b2b41762af5c7c273c564b7d4dbd16f1'
+##################################
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
